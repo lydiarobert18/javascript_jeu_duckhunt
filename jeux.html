@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Jeux canard</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id='contenant'>
+		<img id='duck' src="img/duck-right.gif" alt="">
+      <span id='sang'></span>
+
+		<button id='partie'> Nouvelle partie</button>
+		<span id='scorespan'></span>
+
+	</div>
+
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+	<script type="text/javascript">
+  $(function(){
+					// début du code
+
+          var score =10;
+
+        $( "#duck" ).css('left','-20px');
+
+	     //var count=0;
+// dans js, on n'utilise pas var fly=function(){};on utilise function fly(){};
+//les fonctions pour être plus lisible, et pus simple oiur débugging;
+
+	     function fly() {
+        var vitesse=500+Math.random() *3000;
+        var range=$(window).height()-104;
+        var range_left=$(window).width();
+
+        var top_random =Math.random()*range;
+        var top_random1=Math.random()*range;
+
+        var  left_random1=Math.random()*range_left-120;
+        var  left_random2=Math.random()*range_left-120;
+        count++;
+
+        $( "#duck" ).css({left:left_random1,top:top_random,background:'url(img/background.jpg)'});
+        $( "#duck" ).attr("src", "img/duck-right.gif");
+
+        if(count<=10) {
+
+         $( "#duck" ).animate({left: left_random2,top:top_random1}, vitesse,function(){fly()}); 
+       } else{alert('game over');}; 
+     };
+         
+//la différence entre $( '#partie').click( function()  et $.on(click, function 1 , funtion2)
+// fly(), différence avec funtion(){fly()} et fly;
+// dans une fonction, on peut mettre variable, on peut mettre plusieurs instructions, 
+
+         $( '#partie').click( function()
+         {  alert('game starts');
+         	count=0; 
+         	scoretotal=0;
+          $( "#duck" ).css('left','-120px');
+         	$('#scorespan').text(scoretotal+' score');
+         	fly();
+
+
+         }
+         );
+
+         $("#duck").on("mousedown",die); 
+  // die au lieu de die();
+
+  function die(){ 
+    var vitesse=1000+Math.random() *1000; 
+    scoretotal+=score;
+    $('#scorespan').text(scoretotal+' score');
+    $( "#duck" ).css({background:"url(img/sang.png)"});
+    $( "#duck" ).stop().attr("src", "img/duck-dead.gif").animate(
+      {top:'100%'}, vitesse, function(){fly()}
+      );
+   
+  }  	
+
+//$().css  .animate .attr('name','valeur');
+
+
+//if (count<3){return true }   return quitte la fonction 
+
+
+//fin du code 
+});
+</script>
+</body>
+</html>
